@@ -33,3 +33,11 @@ elif type nginx > /dev/null 2>&1; then
     alias ng='nginx'
 fi
 
+# Package management
+if [[ "$OSTYPE" =~ "darwin*" ]]; then
+    alias app='brew'
+elif type yum > /dev/null 2>&1; then
+    alias app='yum'
+elif type apt > /dev/null 2>&1; then
+    alias app='apt'
+fi
