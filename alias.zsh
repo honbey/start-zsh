@@ -1,7 +1,7 @@
 
 # Emacs
 if type emacs > /dev/null 2>&1; then
-    function start_emacs(){exec emacsclient -c -a "" "$@"}
+    function start_emacs() { exec emacsclient -c -a "" "$@" }
     alias killemacs="emacsclient -e '(kill-emacs)'"
     alias emacs='start_emacs'
 fi
