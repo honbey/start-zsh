@@ -1,3 +1,5 @@
+source "$HOME/.env"
+
 export PATH="$HOME/.bin:$PATH"
 
 # Python venv
@@ -59,4 +61,11 @@ if [[ -d "/usr/local/cuda" ]]; then
     export PATH=$PATH:/usr/local/cuda/bin
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64/
     export CUDA_HOME=/usr/local/cuda
+fi
+
+# pnpm
+if type pnpm > /dev/null 2>&1; then
+    export PNPM_HOME="/opt/data/pnpm"
+    export PATH="$PNPM_HOME:$PATH"
+    alias npm='pnpm'
 fi
