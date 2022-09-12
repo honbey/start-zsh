@@ -2,6 +2,11 @@ source "$HOME/.env"
 
 export PATH="$HOME/.bin:$PATH"
 
+# GNUPG
+if type gpg > /dev/null 2>&1; then
+    export GPG_TTY=$(tty)
+fi
+
 # Python venv
 function ap() {
   source /opt/data/pyvenv/${1}/bin/activate; 
@@ -69,3 +74,8 @@ if type pnpm > /dev/null 2>&1; then
     export PATH="$PNPM_HOME:$PATH"
     alias npm='pnpm'
 fi
+
+# Golang
+export GOPATH="/opt/data/go"
+export PATH="$PATH:/opt/data/go/bin"
+

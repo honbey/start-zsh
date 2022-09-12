@@ -19,11 +19,6 @@ if type podman > /dev/null 2>&1; then
     alias docker='podman'
 fi
 
-# Gnupg
-if type gpg > /dev/null 2>&1; then
-    export GPG_TTY=$(tty)
-fi
-
 # Nginx
 if   [[ -f "/usr/local/nginx/sbin/nginx"    ]]; then
     alias ng='/usr/local/nginx/sbin/nginx'
