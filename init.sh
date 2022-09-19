@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 if [[ ! -f "$HOME/.env" ]]; then
     touch "$HOME/.env"
@@ -14,7 +15,7 @@ fi
 
 # Package management
 if ! type app > /dev/null 2>&1; then
-    if [[ "$OSTYPE" =~ "darwin*" ]]; then
+    if [[ "$OSTYPE" =~ darwin* ]]; then
         # export HOMEBREW_BREW_GIT_REMOTE=""
         # export HOMEBREW_CORE_GIT_REMOTE=""
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"

@@ -6,14 +6,6 @@ if type emacs > /dev/null 2>&1; then
     alias emacs='start_emacs'
 fi
 
-# NeoVim
-if   type nvim > /dev/null 2>&1; then
-    alias v='nvim'
-    alias vi='nvim'
-elif type vim  > /dev/null 2>&1; then
-    alias vi='vim'
-fi
-
 # Docker / Podman
 if type podman > /dev/null 2>&1; then
     alias docker='podman'
