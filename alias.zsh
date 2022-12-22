@@ -14,8 +14,8 @@ fi
 # Nginx
 if   [[ -f "/usr/local/nginx/sbin/nginx"    ]]; then
     alias ng='/usr/local/nginx/sbin/nginx'
-elif [[ -f "/var/data/etc/nginx/sbin/nginx" ]]; then
-    alias ng='/var/data/etc/nginx/sbin/nginx'
+elif [[ -f "/opt/data/etc/nginx/sbin/nginx" ]]; then
+    alias ng='/opt/data/etc/nginx/sbin/nginx'
 elif type nginx > /dev/null 2>&1; then
     alias ng='nginx'
 fi
