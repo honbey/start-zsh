@@ -1,6 +1,6 @@
-source "$HOME/.env"
+[[ -f "$HOME/.env" ]] && source "$HOME/.env"
 
-export PATH="$HOME/.bin:$PATH"
+[[ -f "$HOME/.bin" ]] && export PATH="$HOME/.bin:$PATH"
 
 # GNUPG
 if type gpg > /dev/null 2>&1; then
