@@ -35,8 +35,7 @@ function ue() {
     BEGIN {
       for (i = 1; i < ARGC; i++)
         print urlencode(ARGV[i])
-    }' "$@"
-}
+    }' "$@" }
 
 function ud() { echo -e "${1//\%/\\x}" }
 
@@ -61,6 +60,12 @@ function brew-completions() {
     done
 }
 
+# Tmux
+function sendkeys() {
+    tmux send-keys -t "$1" "$2" Enter
+    tmux capture-pane -p -t "$1"
+}
+
 # NVIDIA
 if [[ -d "/usr/local/cuda" ]]; then
     export PATH=$PATH:/usr/local/cuda/bin
@@ -71,11 +76,11 @@ fi
 # pnpm
 if type pnpm > /dev/null 2>&1; then
     export PNPM_HOME="/opt/data/pnpm"
-    export PATH="$PNPM_HOME:$PATH"
+    export PATH="$PATH:$PNPM_HOME"
     alias npm='pnpm'
 fi
 
 # Golang
 export GOPATH="/opt/data/go"
-export PATH="$PATH:/opt/data/go/bin"
+export PATH="$PATH:$GOPATH/bin"
 
