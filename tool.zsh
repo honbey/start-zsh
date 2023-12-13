@@ -73,7 +73,7 @@ if [[ -d "/usr/local/cuda" ]]; then
     export CUDA_HOME=/usr/local/cuda
 fi
 
-# pnpm
+# NodeJS - pnpm
 if type pnpm > /dev/null 2>&1; then
     export PNPM_HOME="/opt/data/pnpm"
     export PATH="$PATH:$PNPM_HOME"
@@ -83,4 +83,11 @@ fi
 # Golang
 export GOPATH="/opt/data/go"
 export PATH="$PATH:$GOPATH/bin"
+
+# fzf
+if [[ -f ~/.fzf.zsh ]]; then
+    export FZF_CTRL_T_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git --exclude .cache'
+    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow'
+    source ~/.fzf.zsh
+fi
 
