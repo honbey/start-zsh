@@ -124,7 +124,7 @@ elif type vim  > /dev/null; then
 fi
 
 # Zoxide
-if [[ type zoxide > /dev/null ]]; then
+if type zoxide > /dev/null; then
     eval "$(zoxide init zsh)"
     # Because i use `Zi`
     \builtin unalias zi
