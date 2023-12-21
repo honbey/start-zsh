@@ -60,6 +60,13 @@ function brew-completions() {
     done
 }
 
+# fzf
+if [[ -f ~/.fzf.zsh ]]; then
+    export FZF_CTRL_T_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git --exclude .cache'
+    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow'
+    source ~/.fzf.zsh
+fi
+
 # Tmux
 function sendkeys() {
     tmux send-keys -t "$1" "$2" Enter
@@ -73,6 +80,27 @@ if [[ -d "/usr/local/cuda" ]]; then
     export CUDA_HOME=/usr/local/cuda
 fi
 
+#####################################
+# Some aliases
+
+# Docker / Podman
+if type podman > /dev/null 2>&1; then
+    alias docker='podman'
+fi
+
+# Nginx
+if   [[ -f "/usr/local/nginx/sbin/nginx"    ]]; then
+    alias ng='/usr/local/nginx/sbin/nginx'
+elif [[ -f "/opt/data/etc/nginx/sbin/nginx" ]]; then
+    alias ng='/opt/data/etc/nginx/sbin/nginx'
+elif type nginx > /dev/null 2>&1; then
+    alias ng='nginx'
+fi
+
+# Golang
+export GOPATH="/opt/data/go"
+export PATH="$PATH:$GOPATH/bin"
+
 # NodeJS - pnpm
 if type pnpm > /dev/null 2>&1; then
     export PNPM_HOME="/opt/data/pnpm"
@@ -80,14 +108,25 @@ if type pnpm > /dev/null 2>&1; then
     alias npm='pnpm'
 fi
 
-# Golang
-export GOPATH="/opt/data/go"
-export PATH="$PATH:$GOPATH/bin"
-
-# fzf
-if [[ -f ~/.fzf.zsh ]]; then
-    export FZF_CTRL_T_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git --exclude .cache'
-    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow'
-    source ~/.fzf.zsh
+# Emacs
+if type emacs > /dev/null 2>&1; then
+    function start_emacs() { exec emacsclient -c -a "" "$@" }
+    alias killemacs="emacsclient -e '(kill-emacs)'"
+    alias emacs='start_emacs'
 fi
 
+# Vim/NeoVim
+if   type nvim > /dev/null; then
+    alias vi='nvim'
+    alias vim='nvim'
+elif type vim  > /dev/null; then
+    alias vi='vim'
+fi
+
+# Zoxide
+if [[ type zoxide > /dev/null ]]; then
+    eval "$(zoxide init zsh)"
+    # Because i use `Zi`
+    \builtin unalias zi
+    \builtin alias zd=__zoxide_zi
+fi
