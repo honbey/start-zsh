@@ -123,8 +123,11 @@ fi
 
 # Zoxide
 if type zoxide > /dev/null; then
-    eval "$(zoxide init zsh)"
     # Because i use `Zi`
-    \builtin unalias zi
-    \builtin alias zd=__zoxide_zi
+    if [[ -f ~/.zoxide.zsh ]]; then
+        source ~/.zoxide.zsh
+    else
+        eval "$(zoxide init zsh)"
+    fi
 fi
+
