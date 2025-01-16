@@ -7,9 +7,10 @@ if type gpg > /dev/null 2>&1; then
     export GPG_TTY=$(tty)
 fi
 
+# Custom functions
 # Python venv
 function ap() {
-  source /opt/data/pyvenv/${1}/bin/activate; 
+    source /opt/data/pyvenv/${1}/bin/activate; 
 }
 
 # base64 encode/decode
@@ -50,6 +51,10 @@ function ts() {
     fi
 }
 
+function ccc() {
+    echo $(("$@"))
+}
+
 function brew-completions() {
     for i in $(ls $(brew --prefix)/opt/*/share/zsh/site-functions/* \
                   $(brew --prefix)/share/zsh/site-functions/*
@@ -59,6 +64,7 @@ function brew-completions() {
         fi
     done
 }
+###
 
 # fzf
 if [[ -f ~/.fzf.zsh ]]; then
@@ -66,12 +72,14 @@ if [[ -f ~/.fzf.zsh ]]; then
     export FZF_ALT_C_COMMAND='fd --type d --hidden --follow'
     source ~/.fzf.zsh
 fi
+###
 
 # Tmux
 function sendkeys() {
     tmux send-keys -t "$1" "$2" Enter
     tmux capture-pane -p -t "$1"
 }
+###
 
 # NVIDIA
 if [[ -d "/usr/local/cuda" ]]; then
@@ -79,14 +87,13 @@ if [[ -d "/usr/local/cuda" ]]; then
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64/
     export CUDA_HOME=/usr/local/cuda
 fi
-
-#####################################
-# Some aliases
+###
 
 # Docker / Podman
 if type podman > /dev/null 2>&1; then
     alias docker='podman'
 fi
+###
 
 # Nginx
 if   [[ -f "/usr/local/nginx/sbin/nginx"    ]]; then
@@ -96,10 +103,28 @@ elif [[ -f "/opt/data/etc/nginx/sbin/nginx" ]]; then
 elif type nginx > /dev/null 2>&1; then
     alias ng='nginx'
 fi
+###
 
 # Golang
-export GOPATH="/opt/data/go"
-export PATH="$PATH:$GOPATH/bin"
+if type go > /dev/null 2>&1; then
+    export GOPATH="/opt/data/go"
+    export PATH="$PATH:$GOPATH/bin"
+    # go env -w GO111MODULE=on
+    # go env -w GOPROXY=https://goproxy.io,direct
+fi
+###
+
+# Rust
+if [[ -d $HOME/.cargo/bin ]]; then
+    export PATH="$HOME/.cargo/bin:$PATH"
+fi
+###
+
+# Java
+if [[ -d $JAVA_HOME ]]; then
+    export PATH="$JAVA_HOME/bin:$PATH"
+fi
+###
 
 # NodeJS - pnpm
 if type pnpm > /dev/null 2>&1; then
@@ -107,27 +132,29 @@ if type pnpm > /dev/null 2>&1; then
     export PATH="$PATH:$PNPM_HOME"
     alias npm='pnpm'
 fi
-
-# Emacs
-if type emacs > /dev/null 2>&1; then
-    alias killemacs="emacsclient -e '(kill-emacs)'"
-fi
+###
 
 # Vim/NeoVim
 if   type nvim > /dev/null; then
+    export EDITOR=nvim
     alias vi='nvim'
     alias vim='nvim'
 elif type vim  > /dev/null; then
+    export EDITOR=vim
     alias vi='vim'
 fi
+###
 
 # Zoxide
 if type zoxide > /dev/null; then
-    # Because i use `Zi`
     if [[ -f ~/.zoxide.zsh ]]; then
         source ~/.zoxide.zsh
     else
-        eval "$(zoxide init zsh)"
+        # Because i use `Zi`
+        zoxide init zsh | sed 's/zi()/zii()/' | sed 's/alias zi/alias zii/' \
+            > ~/.zoxide.zsh
+        source ~/.zoxide.zsh
     fi
 fi
+###
 
